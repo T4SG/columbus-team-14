@@ -62,9 +62,9 @@ public SpeechletResponse onIntent(final IntentRequest request, final Session ses
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
 
-    if ("HelloWorldIntent".equals(intentName)) {
+    if ("LebronStudentIntent".equals(intentName)) {
         return getWelcomeResponse(); }
-    else if ("HelpIntent".equals(intentName)) {
+    else if ("LebronSchoolIntent".equals(intentName)) {
         return getHelpResponse();
     } else {
         String response = session.toString();
@@ -94,6 +94,8 @@ public SpeechletResponse onIntent(final IntentRequest request, final Session ses
             return onSayGrade();
         }
     }
+    
+    
 }
 
 @Override
@@ -111,7 +113,7 @@ public void onSessionEnded(final SessionEndedRequest request, final Session sess
  * @return SpeechletResponse spoken and visual response for the given intent
  */
 private SpeechletResponse getWelcomeResponse() {
-    String speechText = "Hello, what is your student ID? Pleese say the individual digits of the number one at a time.";
+    String speechText = "Nice you meet you bright kid, what's you studentID?";
 
     // Create the Simple card content.
     SimpleCard card = new SimpleCard();
@@ -217,7 +219,7 @@ private SpeechletResponse onSayName() {
 }
 
 private SpeechletResponse onSayClass() {
-    String speechText = "What grade did you get?;
+    String speechText = "What grade did you get?";
 
     // Create the Simple card content.
     SimpleCard card = new SimpleCard();

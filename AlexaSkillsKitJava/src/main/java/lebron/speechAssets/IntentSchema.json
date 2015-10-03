@@ -1,0 +1,12 @@
+{
+  "intents": [
+    {
+      "intent": "LebronSchoolIntent",
+      "slots": []
+    },
+    {
+      "intent": "LebronStudentIntent",
+      "slots": []
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "intents": [
     {
-      "intent": "HelloWorldIntent",
+      "intent": "LebronSchoolIntent",
       "slots": []
     },
     {
-      "intent": "HelpIntent",
+      "intent": "LebronStudentIntent",
       "slots": []
     }
   ]
