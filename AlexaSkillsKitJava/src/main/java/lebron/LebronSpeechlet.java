@@ -39,6 +39,7 @@ String className = null;
 String grade = null;
 
 private static final String ID_SLOT = "Id";
+private static final String GRADE_SLOT = "Grade";
 
 @Override
 public void onSessionStarted(final SessionStartedRequest request, final Session session)
@@ -68,7 +69,10 @@ public SpeechletResponse onIntent(final IntentRequest request, final Session ses
     if ("LebronStudentIntent".equals(intentName)) {
         return getWelcomeResponse(); }
     else if ("LebronSchoolIntent".equals(intentName)) {
-        return getHelpResponse();
+        return getWelcomeResponse();
+    }
+   else if ("LebronGradeIntent".equals(intentName)) {
+        return getGradeResponse(intent);
     } else if ("LebronStudentIDIntent".equals(intentName)) {
         return getStudentIDResponse(intent);
  }
@@ -114,7 +118,7 @@ private SpeechletResponse getStudentIDResponse(Intent intent) {
             Slot idSlot = intent.getSlot(ID_SLOT);
             if (idSlot != null && idSlot.getValue() != null) {
                 String itemName = idSlot.getValue();
-                String speechText = "What is your grade?" + "your item name is" + itemName;
+                String speechText = "your identification number is" + itemName + "What is your grade";
 
                 SimpleCard card = new SimpleCard();
                 card.setTitle("Lebron");
@@ -145,8 +149,12 @@ private SpeechletResponse getStudentIDResponse(Intent intent) {
  *
  * @return SpeechletResponse spoken and visual response for the given intent
  */
-private SpeechletResponse getHelpResponse() {
-    String speechText = "You can say hello to me!";
+private SpeechletResponse getGradeResponse(Intent intent) {
+    
+    Slot gradeSlot = intent.getSlot(GRADE_SLOT);
+            if (gradeSlot != null && gradeSlot.getValue() != null) {
+                String gradeName = gradeSlot.getValue();
+                String speechText = "your grade is" + gradeName + "What class did you get the grade";
 
     // Create the Simple card content.
     SimpleCard card = new SimpleCard();
@@ -162,6 +170,8 @@ private SpeechletResponse getHelpResponse() {
     reprompt.setOutputSpeech(speech);
 
     return SpeechletResponse.newAskResponse(speech, reprompt, card);
+}
+    return null;
 }
 
 private SpeechletResponse onSayID() {

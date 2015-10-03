@@ -8,6 +8,15 @@
         "type": "LIST_OF_Id"
       }
      ]
+    }, 
+    {
+      "intent": "LebronGradeIntent",
+      "slots": [
+      {
+        "name" : "Grade",
+        "type": "LIST_OF_Grade"
+      }
+     ]
     },
     {
       "intent": "LebronSchoolIntent",
