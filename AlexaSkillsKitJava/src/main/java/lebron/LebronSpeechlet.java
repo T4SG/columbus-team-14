@@ -26,9 +26,16 @@ import com.amazon.speech.ui.SimpleCard;
 
 /**
 * This sample shows how to create a simple speechlet for handling speechlet requests.
+* 
 */
 public class LebronSpeechlet implements Speechlet {
 private static final Logger log = LoggerFactory.getLogger(LebronSpeechlet.class);
+
+String id = null;
+String school = null;
+String studentName = null;
+String className = null;
+String grade = null;
 
 @Override
 public void onSessionStarted(final SessionStartedRequest request, final Session session)
@@ -55,12 +62,37 @@ public SpeechletResponse onIntent(final IntentRequest request, final Session ses
     Intent intent = request.getIntent();
     String intentName = (intent != null) ? intent.getName() : null;
 
-    if ("LebronIntent".equals(intentName)) {
-        return getHelloResponse();
-    } else if ("HelpIntent".equals(intentName)) {
+    if ("HelloWorldIntent".equals(intentName)) {
+        return getWelcomeResponse(); }
+    else if ("HelpIntent".equals(intentName)) {
         return getHelpResponse();
     } else {
-        throw new SpeechletException("Invalid Intent");
+        String response = session.toString();
+        if(id == null)
+        {
+            id = response;
+            return onSayID();
+        }
+        else if(school == null)
+        {
+            school = response;
+            return onSaySchool();
+        }
+        else if(studentName == null)
+        {
+            school = response;
+            return onSayName();
+        }
+        else if(className == null)
+        {
+            school = response;
+            return onSayClass();
+        }
+        else
+        {
+            grade = response;
+            return onSayGrade();
+        }
     }
 }
 
@@ -72,14 +104,14 @@ public void onSessionEnded(final SessionEndedRequest request, final Session sess
     // any cleanup logic goes here
 }
 
+
 /**
  * Creates and returns a {@code SpeechletResponse} with a welcome message.
  *
  * @return SpeechletResponse spoken and visual response for the given intent
  */
 private SpeechletResponse getWelcomeResponse() {
-    String speechText = "Hello, what school do you go to?";
-    String repromptText = "For example, say tell Lebron I go to St. Vincent High School";
+    String speechText = "Hello, what is your student ID? Pleese say the individual digits of the number one at a time.";
 
     // Create the Simple card content.
     SimpleCard card = new SimpleCard();
@@ -102,20 +134,6 @@ private SpeechletResponse getWelcomeResponse() {
  *
  * @return SpeechletResponse spoken and visual response for the given intent
  */
-private SpeechletResponse getHelloResponse() {
-    String speechText = "Hello world from group 14";
-
-    // Create the Simple card content.
-    SimpleCard card = new SimpleCard();
-    card.setTitle("Lebron");
-    card.setContent(speechText);
-
-    // Create the plain text output.
-    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-    speech.setText(speechText);
-
-    return SpeechletResponse.newTellResponse(speech, card);
-}
 
 /**
  * Creates a {@code SpeechletResponse} for the help intent.
@@ -139,5 +157,102 @@ private SpeechletResponse getHelpResponse() {
     reprompt.setOutputSpeech(speech);
 
     return SpeechletResponse.newAskResponse(speech, reprompt, card);
+}
+
+private SpeechletResponse onSayID() {
+    String speechText = "What school do you go to?";
+
+    // Create the Simple card content.
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Lebron");
+    card.setContent(speechText);
+
+    // Create the plain text output.
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+
+    // Create reprompt
+    Reprompt reprompt = new Reprompt();
+    reprompt.setOutputSpeech(speech);
+
+    return SpeechletResponse.newAskResponse(speech, reprompt, card);
+}
+
+private SpeechletResponse onSaySchool() {
+    String speechText = "What is your name?";
+
+    // Create the Simple card content.
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Lebron");
+    card.setContent(speechText);
+
+    // Create the plain text output.
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+
+    // Create reprompt
+    Reprompt reprompt = new Reprompt();
+    reprompt.setOutputSpeech(speech);
+
+    return SpeechletResponse.newAskResponse(speech, reprompt, card);
+}
+
+private SpeechletResponse onSayName() {
+    String speechText = "What class are you talking about?";
+
+    // Create the Simple card content.
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Lebron");
+    card.setContent(speechText);
+
+    // Create the plain text output.
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+
+    // Create reprompt
+    Reprompt reprompt = new Reprompt();
+    reprompt.setOutputSpeech(speech);
+
+    return SpeechletResponse.newAskResponse(speech, reprompt, card);
+}
+
+private SpeechletResponse onSayClass() {
+    String speechText = "What grade did you get?;
+
+    // Create the Simple card content.
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Lebron");
+    card.setContent(speechText);
+
+    // Create the plain text output.
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+
+    // Create reprompt
+    Reprompt reprompt = new Reprompt();
+    reprompt.setOutputSpeech(speech);
+
+    return SpeechletResponse.newAskResponse(speech, reprompt, card);
+}
+
+private SpeechletResponse onSayGrade() {
+    String speechText = "Thank you.";
+
+    // Create the Simple card content.
+    SimpleCard card = new SimpleCard();
+    card.setTitle("Lebron");
+    card.setContent(speechText);
+
+    // Create the plain text output.
+    PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    speech.setText(speechText);
+
+    // Create reprompt
+    Reprompt reprompt = new Reprompt();
+    reprompt.setOutputSpeech(speech);
+
+    return SpeechletResponse.newAskResponse(speech, reprompt, card);
+    
+    //submit grade
 }
 }
