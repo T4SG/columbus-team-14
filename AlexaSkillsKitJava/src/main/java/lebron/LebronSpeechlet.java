@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.amazon.speech.slu.Intent;
+import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.LaunchRequest;
 import com.amazon.speech.speechlet.Session;
@@ -23,6 +24,7 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import minecrafthelper.Recipes;
 
 /**
 * This sample shows how to create a simple speechlet for handling speechlet requests.
@@ -36,6 +38,8 @@ String school = null;
 String studentName = null;
 String className = null;
 String grade = null;
+
+private static final String ID_SLOT = "Id";
 
 @Override
 public void onSessionStarted(final SessionStartedRequest request, final Session session)
@@ -67,36 +71,36 @@ public SpeechletResponse onIntent(final IntentRequest request, final Session ses
     else if ("LebronSchoolIntent".equals(intentName)) {
         return getHelpResponse();
     } else {
-        String response = session.toString();
+        //String response = session.toString();
+        // Get the user's favorite color from the session.
         if(id == null)
-        {
-            id = response;
-            return onSayID();
-        }
-        else if(school == null)
-        {
-            school = response;
-            return onSaySchool();
-        }
-        else if(studentName == null)
-        {
-            school = response;
-            return onSayName();
-        }
-        else if(className == null)
-        {
-            school = response;
-            return onSayClass();
-        }
-        else
-        {
-            grade = response;
-            return onSayGrade();
+        {    
+            Slot idSlot = intent.getSlot(ID_SLOT);
+            if (idSlot != null && idSlot.getValue() != null) {
+                String itemName = idSlot.getValue();
+                
+                
+                String speechText = "What is your grade?" + "your item name is" + itemName;
+
+                SimpleCard card = new SimpleCard();
+                card.setTitle("Lebron");
+                card.setContent(speechText);
+                
+                // Create the plain text output.
+                 PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+                 speech.setText(speechText);
+                
+                // Create reprompt
+                Reprompt reprompt = new Reprompt();
+                reprompt.setOutputSpeech(speech);
+
+                return SpeechletResponse.newAskResponse(speech, reprompt, card);
         }
     }
-    
-    
+ }
+    return null;
 }
+    
 
 @Override
 public void onSessionEnded(final SessionEndedRequest request, final Session session)
@@ -113,7 +117,7 @@ public void onSessionEnded(final SessionEndedRequest request, final Session sess
  * @return SpeechletResponse spoken and visual response for the given intent
  */
 private SpeechletResponse getWelcomeResponse() {
-    String speechText = "Nice you meet you bright kid, what's you studentID?";
+    String speechText = "Nice you meet you bright kid, what's your student identification?";
 
     // Create the Simple card content.
     SimpleCard card = new SimpleCard();
@@ -129,6 +133,7 @@ private SpeechletResponse getWelcomeResponse() {
     reprompt.setOutputSpeech(speech);
 
     return SpeechletResponse.newAskResponse(speech, reprompt, card);
+        
 }
 
 /**

@@ -1,6 +1,15 @@
 {
   "intents": [
     {
+      "intent": "LebronStudentIDIntent",
+      "slots": [
+      {
+        "name" : "Id",
+        "type": "LIST_OF_Id"
+      }
+     ]
+    },
+    {
       "intent": "LebronSchoolIntent",
       "slots": []
     },
