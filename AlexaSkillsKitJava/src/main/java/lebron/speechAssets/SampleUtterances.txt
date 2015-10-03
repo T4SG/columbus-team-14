@@ -12,9 +12,4 @@ LebronStudentIntent find me
 LebronStudentIntent identify me
 
 LebronStudentIDIntent my student identification number is {Id}
-
-LebronStudentGradeIntent my grade is {Grade}
-
-LebronStudentSchoolNameIntent my school name is {School}
-
-LebronStudentClassIntent my class name is {Class}
+LebronStudentIDIntent my student id number is {Id}

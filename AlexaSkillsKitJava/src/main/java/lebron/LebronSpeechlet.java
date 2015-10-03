@@ -24,7 +24,6 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
-import minecrafthelper.Recipes;
 
 /**
 * This sample shows how to create a simple speechlet for handling speechlet requests.
@@ -70,33 +69,8 @@ public SpeechletResponse onIntent(final IntentRequest request, final Session ses
         return getWelcomeResponse(); }
     else if ("LebronSchoolIntent".equals(intentName)) {
         return getHelpResponse();
-    } else {
-        //String response = session.toString();
-        // Get the user's favorite color from the session.
-        if(id == null)
-        {    
-            Slot idSlot = intent.getSlot(ID_SLOT);
-            if (idSlot != null && idSlot.getValue() != null) {
-                String itemName = idSlot.getValue();
-                
-                
-                String speechText = "What is your grade?" + "your item name is" + itemName;
-
-                SimpleCard card = new SimpleCard();
-                card.setTitle("Lebron");
-                card.setContent(speechText);
-                
-                // Create the plain text output.
-                 PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-                 speech.setText(speechText);
-                
-                // Create reprompt
-                Reprompt reprompt = new Reprompt();
-                reprompt.setOutputSpeech(speech);
-
-                return SpeechletResponse.newAskResponse(speech, reprompt, card);
-        }
-    }
+    } else if ("LebronStudentIDIntent".equals(intentName)) {
+        return getStudentIDResponse(intent);
  }
     return null;
 }
@@ -134,6 +108,30 @@ private SpeechletResponse getWelcomeResponse() {
 
     return SpeechletResponse.newAskResponse(speech, reprompt, card);
         
+}
+
+private SpeechletResponse getStudentIDResponse(Intent intent) {
+            Slot idSlot = intent.getSlot(ID_SLOT);
+            if (idSlot != null && idSlot.getValue() != null) {
+                String itemName = idSlot.getValue();
+                String speechText = "What is your grade?" + "your item name is" + itemName;
+
+                SimpleCard card = new SimpleCard();
+                card.setTitle("Lebron");
+                card.setContent(speechText);
+                
+                // Create the plain text output.
+                 PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+                 speech.setText(speechText);
+                
+                // Create reprompt
+                Reprompt reprompt = new Reprompt();
+                reprompt.setOutputSpeech(speech);
+
+                return SpeechletResponse.newAskResponse(speech, reprompt, card);
+        
+}
+    return null;
 }
 
 /**
